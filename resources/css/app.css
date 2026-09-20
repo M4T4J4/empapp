@@ -1,0 +1,101 @@
+@import 'tailwindcss';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+
+@theme {
+    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+        'Segoe UI Symbol', 'Noto Color Emoji';
+}
+
+@layer base {
+    * {
+        box-sizing: border-box;
+    }
+
+    body {
+        @apply m-0 bg-slate-100 font-sans text-slate-800;
+    }
+
+    a {
+        @apply no-underline;
+    }
+}
+
+@layer components {
+    .btn {
+        @apply inline-flex items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm font-semibold transition-all duration-200;
+    }
+
+    .btn-primary {
+        @apply bg-blue-600 text-white shadow-sm hover:bg-blue-700;
+    }
+
+    .btn-secondary {
+        @apply border border-slate-200 bg-white text-slate-700 hover:bg-slate-50;
+    }
+
+    .btn-danger {
+        @apply bg-red-600 text-white hover:bg-red-700;
+    }
+
+    .card {
+        @apply rounded-2xl border border-slate-200 bg-white p-6 shadow-sm;
+    }
+
+    .badge {
+        @apply inline-flex items-center rounded-full bg-blue-100 px-2.5 py-1 text-[11px] font-bold uppercase tracking-[0.08em] text-blue-700;
+    }
+
+    .form-card {
+        @apply mx-auto max-w-xl rounded-3xl border border-slate-200 bg-white p-8 shadow-lg shadow-slate-200/50;
+    }
+
+    .alert {
+        @apply rounded-xl border px-4 py-3 text-sm;
+    }
+
+    .alert-success {
+        @apply border-emerald-200 bg-emerald-50 text-emerald-700;
+    }
+
+    .alert-error {
+        @apply border-red-200 bg-red-50 text-red-700;
+    }
+
+    .toast-container {
+        @apply fixed right-5 top-5 z-[60] flex w-[min(360px,calc(100vw-2rem))] flex-col gap-3;
+    }
+
+    .toast {
+        @apply rounded-2xl border border-slate-200 bg-white p-4 shadow-xl shadow-slate-900/10 opacity-0 -translate-y-2 transition-all duration-300;
+        animation: toast-in 0.25s ease forwards;
+    }
+
+    .toast-success {
+        @apply border-emerald-200 bg-emerald-50 text-emerald-800;
+    }
+
+    .toast-error {
+        @apply border-red-200 bg-red-50 text-red-700;
+    }
+
+    .toast-title {
+        @apply mb-1 text-sm font-bold uppercase tracking-[0.08em];
+    }
+
+    .toast-message {
+        @apply text-sm leading-5;
+    }
+
+    .input-field {
+        @apply w-full rounded-xl border border-slate-200 bg-white px-3.5 py-2.5 text-slate-800 outline-none transition focus:border-blue-500 focus:ring-3 focus:ring-blue-100;
+    }
+}
+
+@keyframes toast-in {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
