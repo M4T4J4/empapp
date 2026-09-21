@@ -17,6 +17,7 @@ use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\AlertController;
 use App\Http\Controllers\RecruiterController;
+use Illuminate\Support\Facades\Auth;
 
 // Routes publiques
 Route::get('/', function () {
@@ -70,7 +71,7 @@ Route::middleware('auth')->group(function () {
         return view('dashboard');
     })->name('dashboard');
 
-    Route::middleware('can:access-admin')->group(function () {
+    Route::middleware('auth')->group(function () {
         Route::get('/admin', [App\Http\Controllers\AdminController::class, 'dashboard'])->name('admin.dashboard');
         Route::get('/admin/users', [App\Http\Controllers\AdminController::class, 'users'])->name('admin.users');
         Route::get('/admin/candidates', [App\Http\Controllers\AdminController::class, 'candidates'])->name('admin.candidates');
