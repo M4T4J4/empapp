@@ -35,7 +35,7 @@ Route::get('/', function () {
 
 /*
 |--------------------------------------------------------------------------
-| Routes offres d'emploi pour les candidats
+| Routes des offres d'emploi
 |--------------------------------------------------------------------------
 */
 
@@ -43,6 +43,8 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/job-offers', function (Request $request) {
 
+        // Les recruteurs et administrateurs ne peuvent pas accéder
+        // à l'espace de recherche des candidats.
         if (Auth::user()?->is_recruiter || Auth::user()?->is_admin) {
             abort(403, 'Accès interdit pour ce type de compte.');
         }
@@ -54,6 +56,8 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/job-offers/{jobOffer}', function (JobOffer $jobOffer) {
 
+        // Les recruteurs et administrateurs ne peuvent pas accéder
+        // à cet espace.
         if (Auth::user()?->is_recruiter || Auth::user()?->is_admin) {
             abort(403, 'Accès interdit pour ce type de compte.');
         }
@@ -140,164 +144,189 @@ Route::middleware('auth')->group(function () {
     | ADMINISTRATION
     |--------------------------------------------------------------------------
     |
-    | Le middleware "admin" vérifie que l'utilisateur possède
-    | is_admin = true.
+    | Pas de AdminMiddleware.
+    | On vérifie directement is_admin dans chaque route.
     |
     */
 
-    Route::middleware('admin')->group(function () {
+
+    // Dashboard administrateur
+    Route::get('/admin', function () {
+
+        if (!Auth::check()) {
+            abort(403, 'Utilisateur non connecté.');
+        }
+
+        if (!Auth::user()->is_admin) {
+            abort(403, 'Accès réservé aux administrateurs.');
+        }
+
+        return app(AdminController::class)->dashboard();
+
+    })->name('admin.dashboard');
 
 
-        /*
-        |--------------------------------------------------------------------------
-        | Dashboard administrateur
-        |--------------------------------------------------------------------------
-        */
+    // Utilisateurs
+    Route::get('/admin/users', function () {
 
-        Route::get('/admin', [AdminController::class, 'dashboard'])
-            ->name('admin.dashboard');
+        if (!Auth::user()->is_admin) {
+            abort(403, 'Accès réservé aux administrateurs.');
+        }
 
+        return app(AdminController::class)->users();
 
-        /*
-        |--------------------------------------------------------------------------
-        | Gestion des utilisateurs
-        |--------------------------------------------------------------------------
-        */
-
-        Route::get('/admin/users', [AdminController::class, 'users'])
-            ->name('admin.users');
+    })->name('admin.users');
 
 
-        /*
-        |--------------------------------------------------------------------------
-        | Gestion des candidats
-        |--------------------------------------------------------------------------
-        */
+    // Candidats
+    Route::get('/admin/candidates', function () {
 
-        Route::get('/admin/candidates', [AdminController::class, 'candidates'])
-            ->name('admin.candidates');
+        if (!Auth::user()->is_admin) {
+            abort(403, 'Accès réservé aux administrateurs.');
+        }
 
+        return app(AdminController::class)->candidates();
 
-        /*
-        |--------------------------------------------------------------------------
-        | Gestion des entreprises
-        |--------------------------------------------------------------------------
-        */
-
-        Route::get('/admin/companies', [AdminController::class, 'companies'])
-            ->name('admin.companies');
+    })->name('admin.candidates');
 
 
-        /*
-        |--------------------------------------------------------------------------
-        | Gestion des offres
-        |--------------------------------------------------------------------------
-        */
+    // Entreprises
+    Route::get('/admin/companies', function () {
 
-        Route::get('/admin/offers', [AdminController::class, 'offers'])
-            ->name('admin.offers');
+        if (!Auth::user()->is_admin) {
+            abort(403, 'Accès réservé aux administrateurs.');
+        }
 
+        return app(AdminController::class)->companies();
 
-        /*
-        |--------------------------------------------------------------------------
-        | Gestion des catégories
-        |--------------------------------------------------------------------------
-        */
-
-        Route::get('/admin/categories', [AdminController::class, 'categories'])
-            ->name('admin.categories');
+    })->name('admin.companies');
 
 
-        /*
-        |--------------------------------------------------------------------------
-        | Gestion des régions
-        |--------------------------------------------------------------------------
-        */
+    // Offres
+    Route::get('/admin/offers', function () {
 
-        Route::get('/admin/regions', [AdminController::class, 'regions'])
-            ->name('admin.regions');
+        if (!Auth::user()->is_admin) {
+            abort(403, 'Accès réservé aux administrateurs.');
+        }
 
+        return app(AdminController::class)->offers();
 
-        /*
-        |--------------------------------------------------------------------------
-        | Rapports
-        |--------------------------------------------------------------------------
-        */
-
-        Route::get('/admin/reports', [AdminController::class, 'reports'])
-            ->name('admin.reports');
+    })->name('admin.offers');
 
 
-        /*
-        |--------------------------------------------------------------------------
-        | Notifications
-        |--------------------------------------------------------------------------
-        */
+    // Catégories
+    Route::get('/admin/categories', function () {
 
-        Route::get('/admin/notifications', [AdminController::class, 'notifications'])
-            ->name('admin.notifications');
+        if (!Auth::user()->is_admin) {
+            abort(403, 'Accès réservé aux administrateurs.');
+        }
 
+        return app(AdminController::class)->categories();
 
-        /*
-        |--------------------------------------------------------------------------
-        | Activer / désactiver un utilisateur
-        |--------------------------------------------------------------------------
-        */
-
-        Route::post(
-            '/admin/users/{user}/toggle-status',
-            [AdminController::class, 'toggleUserStatus']
-        )->name('admin.users.toggle-status');
+    })->name('admin.categories');
 
 
-        /*
-        |--------------------------------------------------------------------------
-        | Bloquer / débloquer un utilisateur
-        |--------------------------------------------------------------------------
-        */
+    // Régions
+    Route::get('/admin/regions', function () {
 
-        Route::post(
-            '/admin/users/{user}/toggle-block',
-            [AdminController::class, 'toggleUserBlock']
-        )->name('admin.users.toggle-block');
+        if (!Auth::user()->is_admin) {
+            abort(403, 'Accès réservé aux administrateurs.');
+        }
 
+        return app(AdminController::class)->regions();
 
-        /*
-        |--------------------------------------------------------------------------
-        | Approuver / désapprouver une entreprise
-        |--------------------------------------------------------------------------
-        */
-
-        Route::post(
-            '/admin/companies/{user}/toggle-approval',
-            [AdminController::class, 'toggleCompanyApproval']
-        )->name('admin.companies.toggle-approval');
+    })->name('admin.regions');
 
 
-        /*
-        |--------------------------------------------------------------------------
-        | Approuver / désapprouver une offre
-        |--------------------------------------------------------------------------
-        */
+    // Rapports
+    Route::get('/admin/reports', function () {
 
-        Route::post(
-            '/admin/offers/{jobOffer}/toggle-approval',
-            [AdminController::class, 'toggleOfferApproval']
-        )->name('admin.offers.toggle-approval');
+        if (!Auth::user()->is_admin) {
+            abort(403, 'Accès réservé aux administrateurs.');
+        }
+
+        return app(AdminController::class)->reports();
+
+    })->name('admin.reports');
 
 
-        /*
-        |--------------------------------------------------------------------------
-        | Supprimer du contenu
-        |--------------------------------------------------------------------------
-        */
+    // Notifications
+    Route::get('/admin/notifications', function () {
 
-        Route::delete(
-            '/admin/content/{type}/{id}',
-            [AdminController::class, 'deleteContent']
-        )->name('admin.content.delete');
+        if (!Auth::user()->is_admin) {
+            abort(403, 'Accès réservé aux administrateurs.');
+        }
 
-    });
+        return app(AdminController::class)->notifications();
+
+    })->name('admin.notifications');
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Actions administrateur
+    |--------------------------------------------------------------------------
+    */
+
+
+    // Activer / désactiver un utilisateur
+    Route::post('/admin/users/{user}/toggle-status', function (User $user) {
+
+        if (!Auth::user()->is_admin) {
+            abort(403, 'Accès réservé aux administrateurs.');
+        }
+
+        return app(AdminController::class)->toggleUserStatus($user);
+
+    })->name('admin.users.toggle-status');
+
+
+    // Bloquer / débloquer un utilisateur
+    Route::post('/admin/users/{user}/toggle-block', function (User $user) {
+
+        if (!Auth::user()->is_admin) {
+            abort(403, 'Accès réservé aux administrateurs.');
+        }
+
+        return app(AdminController::class)->toggleUserBlock($user);
+
+    })->name('admin.users.toggle-block');
+
+
+    // Approuver / désapprouver une entreprise
+    Route::post('/admin/companies/{user}/toggle-approval', function (User $user) {
+
+        if (!Auth::user()->is_admin) {
+            abort(403, 'Accès réservé aux administrateurs.');
+        }
+
+        return app(AdminController::class)->toggleCompanyApproval($user);
+
+    })->name('admin.companies.toggle-approval');
+
+
+    // Approuver / désapprouver une offre
+    Route::post('/admin/offers/{jobOffer}/toggle-approval', function (JobOffer $jobOffer) {
+
+        if (!Auth::user()->is_admin) {
+            abort(403, 'Accès réservé aux administrateurs.');
+        }
+
+        return app(AdminController::class)->toggleOfferApproval($jobOffer);
+
+    })->name('admin.offers.toggle-approval');
+
+
+    // Supprimer du contenu
+    Route::delete('/admin/content/{type}/{id}', function ($type, $id) {
+
+        if (!Auth::user()->is_admin) {
+            abort(403, 'Accès réservé aux administrateurs.');
+        }
+
+        return app(AdminController::class)->deleteContent($type, $id);
+
+    })->name('admin.content.delete');
 
 
     /*
@@ -306,22 +335,18 @@ Route::middleware('auth')->group(function () {
     |--------------------------------------------------------------------------
     |
     | Garde ici tes autres routes :
-    | profil, compétences, CV, candidatures, favoris, etc.
+    | profil, compétences, CV, candidatures, favoris,
+    | notifications, alertes, etc.
     |
     */
-
 
 });
 
 
 /*
 |--------------------------------------------------------------------------
-| Route temporaire de debug
+| DEBUG - Vérification des utilisateurs
 |--------------------------------------------------------------------------
-|
-| Permet de vérifier que l'utilisateur administrateur existe
-| bien dans la base de données Render.
-|
 */
 
 Route::get('/users-debug', function () {
@@ -334,3 +359,26 @@ Route::get('/users-debug', function () {
     )->get();
 
 });
+
+
+/*
+|--------------------------------------------------------------------------
+| DEBUG - Vérification de l'utilisateur connecté
+|--------------------------------------------------------------------------
+*/
+
+Route::get('/admin-test', function () {
+
+    if (!Auth::check()) {
+        return 'PAS CONNECTE';
+    }
+
+    return [
+        'id' => Auth::user()->id,
+        'name' => Auth::user()->name,
+        'email' => Auth::user()->email,
+        'is_admin' => Auth::user()->is_admin,
+        'is_recruiter' => Auth::user()->is_recruiter,
+    ];
+
+})->middleware('auth');
