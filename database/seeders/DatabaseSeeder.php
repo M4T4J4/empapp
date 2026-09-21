@@ -142,10 +142,10 @@ class DatabaseSeeder extends Seeder
             );
         }
 
-        // Créer un utilisateur de test
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-        ]);
+        // // Créer un utilisateur de test
+        // User::factory()->create([
+        //     'name' => 'Test User',
+        //     'email' => 'test@example.com',
+        // ]);
     }
 }
