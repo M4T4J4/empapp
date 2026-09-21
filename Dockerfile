@@ -95,7 +95,8 @@ RUN chmod -R 775 storage bootstrap/cache database
 # =========================================================
 RUN php artisan config:clear \
     && php artisan route:clear \
-    && php artisan view:clear
+    && php artisan view:clear \
+    && php artisan cache:clear
 
 
 # =========================================================
