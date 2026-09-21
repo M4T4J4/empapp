@@ -175,15 +175,6 @@ Route::middleware('auth')->group(function () {
 });
 
 
-Route::get('/make-admin', function () {
-    $user = User::where('email', 'maestrojordan4@gmail.com')->first();
-
-    if (!$user) {
-        return 'Utilisateur introuvable';
-    }
-
-    $user->is_admin = true;
-    $user->save();
-
-    return 'Admin créé avec succès';
+Route::get('/users-debug', function () {
+    return \App\Models\User::select('id', 'name', 'email', 'is_admin')->get();
 });
