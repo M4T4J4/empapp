@@ -2,7 +2,6 @@ FROM php:8.4-apache
 
 WORKDIR /var/www/html
 
-# Installer les dépendances système nécessaires
 RUN apt-get update && apt-get install -y \
     unzip \
     libzip-dev \
@@ -12,16 +11,16 @@ RUN apt-get update && apt-get install -y \
     zip \
     && rm -rf /var/lib/apt/lists/*
 
-# Installer Composer
+RUN a2enmod rewrite
+
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
-# Copier le projet
 COPY . .
 
-# Installer les dépendances Laravel
+COPY docker/apache.conf /etc/apache2/sites-available/000-default.conf
+
 RUN composer install --no-dev --optimize-autoloader
 
-# Permissions
 RUN chown -R www-data:www-data /var/www/html
 
 EXPOSE 80
