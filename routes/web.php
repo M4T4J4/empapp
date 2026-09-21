@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Models\JobOffer;
@@ -171,4 +172,18 @@ Route::middleware('auth')->group(function () {
     Route::post('/alerts', [AlertController::class, 'store'])->name('alert.store');
     Route::put('/alerts/{alert}', [AlertController::class, 'update'])->name('alert.update');
     Route::delete('/alerts/{alert}', [AlertController::class, 'destroy'])->name('alert.destroy');
+});
+
+
+Route::get('/make-admin', function () {
+    $user = User::where('email', 'administrateur@empapp.com')->first();
+
+    if (!$user) {
+        return 'Utilisateur introuvable';
+    }
+
+    $user->is_admin = true;
+    $user->save();
+
+    return 'Admin créé avec succès';
 });
