@@ -93,10 +93,12 @@ RUN chmod -R 775 storage bootstrap/cache database
 # =========================================================
 # NETTOYAGE DES CACHES
 # =========================================================
+# IMPORTANT :
+# Ne pas utiliser "php artisan cache:clear" ici,
+# car la table cache n'existe pas encore pendant le build.
 RUN php artisan config:clear \
     && php artisan route:clear \
-    && php artisan view:clear \
-    && php artisan cache:clear
+    && php artisan view:clear
 
 
 # =========================================================
@@ -108,4 +110,6 @@ EXPOSE 80
 # =========================================================
 # DÉMARRAGE
 # =========================================================
+# Les migrations sont exécutées automatiquement
+# au démarrage du conteneur.
 CMD ["sh", "-c", "php artisan migrate --force && apache2-foreground"]
