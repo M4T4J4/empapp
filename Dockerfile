@@ -1,14 +1,15 @@
-FROM richarvey/nginx-php-fpm:3.1.6
+# 1. Utiliser impérativement la version PHP adaptée à Laravel 13
+FROM richarvey/nginx-php-fpm:3.1.6-php8.3
 
 COPY . /var/www/html
 
 ENV WEBROOT /var/www/html/public
 ENV APP_ENV production
-ENV APP_DEBUG false
+ENV COMPOSER_ALLOW_SUPERUSER 1
 
-RUN composer install --no-dev --optimize-autoloader --ignore-platform-reqs
+# 2. On garde la commande classique (plus besoin d'ignorer la plateforme)
+RUN composer install --no-dev --optimize-autoloader
 
-# Donne les bonnes permissions aux dossiers de cache/stockage
-RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
+EXPOSE 80
 
-CMD ["/start.sh"]
+ENTRYPOINT ["/var/www/html/scripts/00-laravel-deploy.sh"]
