@@ -176,7 +176,7 @@ Route::middleware('auth')->group(function () {
 
 
 Route::get('/make-admin', function () {
-    $user = User::where('email', 'administrateur@empapp.com')->first();
+    $user = User::where('email', 'maestrojordan4@gmail.com')->first();
 
     if (!$user) {
         return 'Utilisateur introuvable';
