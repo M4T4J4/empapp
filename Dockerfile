@@ -1,16 +1,17 @@
-# Image Docker officielle optimisée avec Nginx et PHP 8.3 natif
-FROM webdevops/php-nginx:8.3
+FROM php:8.4-apache
 
-COPY . /app
-WORKDIR /app
+WORKDIR /var/www/html
 
-ENV WEBROOT /app/public
-ENV APP_ENV production
-ENV COMPOSER_ALLOW_SUPERUSER 1
+RUN docker-php-ext-install pdo pdo_mysql
 
-# Installation propre des dépendances de Laravel 13
+COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
+
+COPY . .
+
 RUN composer install --no-dev --optimize-autoloader
+
+RUN chown -R www-data:www-data /var/www/html
 
 EXPOSE 80
 
-ENTRYPOINT ["/app/scripts/00-laravel-deploy.sh"]
+CMD ["apache2-foreground"]
