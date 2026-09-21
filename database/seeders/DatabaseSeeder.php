@@ -8,7 +8,6 @@ use App\Models\Skill;
 use App\Models\JobOffer;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use WithoutModelEvents;
 
 
 class DatabaseSeeder extends Seeder
