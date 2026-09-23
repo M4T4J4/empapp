@@ -24,8 +24,8 @@ class ApplicationController extends Controller
 
         $application = Auth::user()->applications()->create([
             'job_offer_id' => $jobOffer->id,
-            'resume_id' => $validated['resume_id'],
-            'cover_letter' => $validated['cover_letter'],
+            'resume_id' => $validated['resume_id'] ?? null,
+            'cover_letter' => $validated['cover_letter'] ?? null,
             'status' => 'pending',
         ]);
 
@@ -119,10 +119,13 @@ class ApplicationController extends Controller
             'rejected' => 'Refusée',
         ];
 
+        $previousStatusLabel = $statusMap[$previousStatus] ?? $previousStatus;
+        $newStatusLabel = $statusMap[$validated['status']] ?? $validated['status'];
+
         Notification::create([
             'user_id' => $application->user_id,
             'title' => 'Changement de statut',
-            'message' => "Le statut de votre candidature pour {$application->jobOffer->title} est passé de {$statusMap[$previousStatus] ?? $previousStatus} à {$statusMap[$validated['status']] ?? $validated['status']}.",
+            'message' => "Le statut de votre candidature pour {$application->jobOffer->title} est passé de {$previousStatusLabel} à {$newStatusLabel}.",
             'type' => 'status_update',
             'related_id' => $application->id,
         ]);

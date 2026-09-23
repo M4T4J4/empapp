@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Storage;
 it('loads the main candidate features pages', function () {
     $user = User::factory()->create([
         'is_recruiter' => false,
+        'is_premium' => true,
     ]);
 
     $this->actingAs($user)

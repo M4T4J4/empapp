@@ -11,6 +11,7 @@ it('exposes public candidate and company profiles and recommendation pages', fun
         'password' => Hash::make('password123'),
         'is_recruiter' => false,
         'is_verified' => true,
+        'is_premium' => true,
     ]);
 
     $company = User::factory()->create([

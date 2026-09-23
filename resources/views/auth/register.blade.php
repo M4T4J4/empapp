@@ -41,6 +41,20 @@
                     <input id="password_confirmation" type="password" name="password_confirmation" required>
                 </div>
 
+                <div>
+                    <label>Type de compte</label>
+                    <div style="display:flex; gap:16px; margin-top:8px;">
+                        <label style="display:flex; align-items:center; gap:8px;">
+                            <input type="radio" name="is_recruiter" value="0" checked>
+                            <span>Candidat</span>
+                        </label>
+                        <label style="display:flex; align-items:center; gap:8px;">
+                            <input type="radio" name="is_recruiter" value="1">
+                            <span>Recruteur</span>
+                        </label>
+                    </div>
+                </div>
+
                 <button type="submit" class="btn btn-primary">Créer mon compte</button>
             </form>
 
