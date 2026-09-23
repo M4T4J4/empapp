@@ -24,8 +24,8 @@ class ApplicationController extends Controller
 
         $application = Auth::user()->applications()->create([
             'job_offer_id' => $jobOffer->id,
-            'resume_id' => $validated['resume_id'] ?? null,
-            'cover_letter' => $validated['cover_letter'] ?? null,
+            'resume_id' => $validated['resume_id'],
+            'cover_letter' => $validated['cover_letter'],
             'status' => 'pending',
         ]);
 
@@ -105,20 +105,12 @@ class ApplicationController extends Controller
 
     public function updateStatus(Request $request, Application $application)
     {
-        $this->authorize('updateStatus', $application);
-
         $validated = $request->validate([
             'status' => ['required', 'in:pending,viewed,accepted,rejected'],
         ]);
 
         $previousStatus = $application->status;
-        $newStatus = $validated['status'];
-
-        if ($previousStatus === $newStatus) {
-            return redirect()->back()->with('success', 'Statut déjà défini.');
-        }
-
-        $application->update(['status' => $newStatus]);
+        $application->update(['status' => $validated['status']]);
 
         $statusMap = [
             'pending' => 'En attente',
@@ -127,13 +119,10 @@ class ApplicationController extends Controller
             'rejected' => 'Refusée',
         ];
 
-        $previousStatusLabel = $statusMap[$previousStatus] ?? $previousStatus;
-        $newStatusLabel = $statusMap[$newStatus] ?? $newStatus;
-
         Notification::create([
             'user_id' => $application->user_id,
             'title' => 'Changement de statut',
-            'message' => "Le statut de votre candidature pour {$application->jobOffer->title} est passé de {$previousStatusLabel} à {$newStatusLabel}.",
+            'message' => "Le statut de votre candidature pour {$application->jobOffer->title} est passé de {$statusMap[$previousStatus] ?? $previousStatus} à {$statusMap[$validated['status']] ?? $validated['status']}.",
             'type' => 'status_update',
             'related_id' => $application->id,
         ]);
@@ -143,13 +132,8 @@ class ApplicationController extends Controller
 
     public function candidates(Request $request)
     {
-        $user = Auth::user();
-
         $query = \App\Models\User::query()
             ->where('is_recruiter', false)
-            ->whereHas('applications', function ($query) use ($user) {
-                $query->whereHas('jobOffer', fn ($jobQuery) => $jobQuery->where('user_id', $user->id));
-            })
             ->when($request->filled('search'), fn ($q) => $q->where('name', 'like', "%{$request->search}%"))
             ->when($request->filled('location'), fn ($q) => $q->where('location', 'like', "%{$request->location}%"))
             ->when($request->filled('employment_preference'), fn ($q) => $q->where('employment_preference', $request->employment_preference));

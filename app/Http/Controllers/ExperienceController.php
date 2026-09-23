@@ -30,7 +30,7 @@ class ExperienceController extends Controller
 
         Auth::user()->experiences()->create($validated);
 
-        return redirect()->route('profile.edit')->with('success', 'Expérience ajoutée!');
+        return redirect()->route('profile.show')->with('success', 'Expérience ajoutée!');
     }
 
     public function update(Request $request, Experience $experience)
@@ -57,7 +57,7 @@ class ExperienceController extends Controller
 
         $experience->update($validated);
 
-        return redirect()->route('profile.edit')->with('success', 'Expérience mise à jour!');
+        return redirect()->route('profile.show')->with('success', 'Expérience mise à jour!');
     }
 
     public function destroy(Experience $experience)
@@ -65,6 +65,6 @@ class ExperienceController extends Controller
         $this->authorize('delete', $experience);
         $experience->delete();
 
-        return redirect()->route('profile.edit')->with('success', 'Expérience supprimée!');
+        return redirect()->route('profile.show')->with('success', 'Expérience supprimée!');
     }
 }

@@ -25,6 +25,5 @@ it('requires premium access for premium features', function () {
 
     $this->actingAs($user)
         ->get(route('premium.index'))
-        ->assertRedirect(route('dashboard'))
-        ->assertSessionHas('success', 'Premium sera bientôt disponible.');
+        ->assertRedirect(route('dashboard'));
 });

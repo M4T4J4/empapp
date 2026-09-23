@@ -76,11 +76,7 @@ class RecruiterController extends Controller
         $stats = [
             'offers' => JobOffer::where('user_id', $user->id)->count(),
             'applications' => Application::whereHas('jobOffer', fn ($query) => $query->where('user_id', $user->id))->count(),
-            'candidates' => User::where('is_recruiter', false)
-                ->whereHas('applications', function ($query) use ($user) {
-                    $query->whereHas('jobOffer', fn ($jobQuery) => $jobQuery->where('user_id', $user->id));
-                })
-                ->count(),
+            'candidates' => User::where('is_recruiter', false)->count(),
         ];
 
         return view('recruiter.stats', compact('stats'));

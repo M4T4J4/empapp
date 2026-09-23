@@ -3,43 +3,40 @@
 @section('title', 'Offres d’emploi')
 
 @section('content')
-    <div class="space-y-6">
-        <div class="card">
-            <div class="mb-5 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-                <div>
-                    <p class="text-xs font-bold uppercase tracking-[0.2em] text-blue-700">Jobs</p>
-                    <h1 class="mt-2 text-3xl font-black tracking-tight text-slate-900">Offres d’emploi</h1>
-                </div>
-                <div class="flex flex-wrap gap-2">
+    <div style="display:grid; gap:22px;">
+        <div class="card" style="padding:20px 22px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap; margin-bottom:16px;">
+                <h1 class="section-title" style="margin:0;">Offres d’emploi</h1>
+                <div class="tag-row">
                     <span class="tag">Offres récentes</span>
                     <span class="tag">Offres recommandées</span>
                 </div>
             </div>
 
-            <form method="GET" action="{{ route('job-offer.index') }}" class="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+            <form method="GET" action="{{ route('job-offer.index') }}" style="display:grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap:12px; align-items:end;">
                 <div>
-                    <label for="search" class="mb-2 block text-sm font-semibold text-slate-700">Mot-clé</label>
-                    <input id="search" type="text" name="search" value="{{ request('search') }}" placeholder="Ex. Laravel, dev, marketing" class="input-field">
+                    <label for="search">Mot-clé</label>
+                    <input id="search" type="text" name="search" value="{{ request('search') }}" placeholder="Ex. Laravel, dev, marketing">
                 </div>
                 <div>
-                    <label for="profession" class="mb-2 block text-sm font-semibold text-slate-700">Métier</label>
-                    <input id="profession" type="text" name="profession" value="{{ request('profession') }}" placeholder="Développeur, Designer..." class="input-field">
+                    <label for="profession">Métier</label>
+                    <input id="profession" type="text" name="profession" value="{{ request('profession') }}" placeholder="Développeur, Designer...">
                 </div>
                 <div>
-                    <label for="company" class="mb-2 block text-sm font-semibold text-slate-700">Entreprise</label>
-                    <input id="company" type="text" name="company" value="{{ request('company') }}" placeholder="Nom de l’entreprise" class="input-field">
+                    <label for="company">Entreprise</label>
+                    <input id="company" type="text" name="company" value="{{ request('company') }}" placeholder="Nom de l’entreprise">
                 </div>
                 <div>
-                    <label for="location" class="mb-2 block text-sm font-semibold text-slate-700">Localisation</label>
-                    <input id="location" type="text" name="location" value="{{ request('location') }}" placeholder="Paris, Lyon, Remote" class="input-field">
+                    <label for="location">Localisation</label>
+                    <input id="location" type="text" name="location" value="{{ request('location') }}" placeholder="Paris, Lyon, Remote">
                 </div>
                 <div>
-                    <label for="city" class="mb-2 block text-sm font-semibold text-slate-700">Ville</label>
-                    <input id="city" type="text" name="city" value="{{ request('city') }}" placeholder="Paris" class="input-field">
+                    <label for="city">Ville</label>
+                    <input id="city" type="text" name="city" value="{{ request('city') }}" placeholder="Paris">
                 </div>
                 <div>
-                    <label for="region" class="mb-2 block text-sm font-semibold text-slate-700">Région</label>
-                    <select id="region" name="region" class="input-field">
+                    <label for="region">Région</label>
+                    <select id="region" name="region">
                         <option value="">Toutes</option>
                         <option value="Centre" {{ request('region') === 'Centre' ? 'selected' : '' }}>Centre</option>
                         <option value="Littoral" {{ request('region') === 'Littoral' ? 'selected' : '' }}>Littoral</option>
@@ -54,12 +51,12 @@
                     </select>
                 </div>
                 <div>
-                    <label for="domain" class="mb-2 block text-sm font-semibold text-slate-700">Domaine</label>
-                    <input id="domain" type="text" name="domain" value="{{ request('domain') }}" placeholder="IT, Marketing, Finance" class="input-field">
+                    <label for="domain">Domaine</label>
+                    <input id="domain" type="text" name="domain" value="{{ request('domain') }}" placeholder="IT, Marketing, Finance">
                 </div>
                 <div>
-                    <label for="employment_type" class="mb-2 block text-sm font-semibold text-slate-700">Type</label>
-                    <select id="employment_type" name="employment_type" class="input-field">
+                    <label for="employment_type">Type</label>
+                    <select id="employment_type" name="employment_type">
                         <option value="">Tous</option>
                         <option value="full_time" {{ request('employment_type') === 'full_time' ? 'selected' : '' }}>Temps plein</option>
                         <option value="part_time" {{ request('employment_type') === 'part_time' ? 'selected' : '' }}>Temps partiel</option>
@@ -69,8 +66,8 @@
                     </select>
                 </div>
                 <div>
-                    <label for="required_experience" class="mb-2 block text-sm font-semibold text-slate-700">Expérience</label>
-                    <select id="required_experience" name="required_experience" class="input-field">
+                    <label for="required_experience">Expérience</label>
+                    <select id="required_experience" name="required_experience">
                         <option value="">Toutes</option>
                         <option value="junior" {{ request('required_experience') === 'junior' ? 'selected' : '' }}>Junior</option>
                         <option value="intermediate" {{ request('required_experience') === 'intermediate' ? 'selected' : '' }}>Intermédiaire</option>
@@ -79,8 +76,8 @@
                     </select>
                 </div>
                 <div>
-                    <label for="education_level" class="mb-2 block text-sm font-semibold text-slate-700">Niveau d’études</label>
-                    <select id="education_level" name="education_level" class="input-field">
+                    <label for="education_level">Niveau d’études</label>
+                    <select id="education_level" name="education_level">
                         <option value="">Tous</option>
                         <option value="Bachelor" {{ request('education_level') === 'Bachelor' ? 'selected' : '' }}>Bachelor</option>
                         <option value="Master" {{ request('education_level') === 'Master' ? 'selected' : '' }}>Master</option>
@@ -88,8 +85,8 @@
                     </select>
                 </div>
                 <div>
-                    <label for="work_mode" class="mb-2 block text-sm font-semibold text-slate-700">Télétravail</label>
-                    <select id="work_mode" name="work_mode" class="input-field">
+                    <label for="work_mode">Télétravail</label>
+                    <select id="work_mode" name="work_mode">
                         <option value="">Tous</option>
                         <option value="remote" {{ request('work_mode') === 'remote' ? 'selected' : '' }}>Télétravail</option>
                         <option value="hybrid" {{ request('work_mode') === 'hybrid' ? 'selected' : '' }}>Hybride</option>
@@ -97,68 +94,68 @@
                     </select>
                 </div>
                 <div>
-                    <label for="salary_min" class="mb-2 block text-sm font-semibold text-slate-700">Salaire min</label>
-                    <input id="salary_min" type="number" name="salary_min" value="{{ request('salary_min') }}" placeholder="300000" class="input-field">
+                    <label for="salary_min">Salaire min (FCFA)</label>
+                    <input id="salary_min" type="number" name="salary_min" value="{{ request('salary_min') }}" placeholder="300000">
                 </div>
                 <div>
-                    <label for="salary_max" class="mb-2 block text-sm font-semibold text-slate-700">Salaire max</label>
-                    <input id="salary_max" type="number" name="salary_max" value="{{ request('salary_max') }}" placeholder="1200000" class="input-field">
+                    <label for="salary_max">Salaire max (FCFA)</label>
+                    <input id="salary_max" type="number" name="salary_max" value="{{ request('salary_max') }}" placeholder="1200000">
                 </div>
                 <div>
-                    <label for="sort" class="mb-2 block text-sm font-semibold text-slate-700">Tri</label>
-                    <select id="sort" name="sort" class="input-field">
+                    <label for="sort">Tri</label>
+                    <select id="sort" name="sort">
                         <option value="recent" {{ request('sort', 'recent') === 'recent' ? 'selected' : '' }}>Plus récentes</option>
                         <option value="recommended" {{ request('sort') === 'recommended' ? 'selected' : '' }}>Recommandées</option>
                         <option value="salary_high" {{ request('sort') === 'salary_high' ? 'selected' : '' }}>Salaire élevé</option>
                         <option value="salary_low" {{ request('sort') === 'salary_low' ? 'selected' : '' }}>Salaire faible</option>
                     </select>
                 </div>
-                <div class="flex items-end gap-3 xl:col-span-1">
-                    <button type="submit" class="btn btn-primary h-[52px]">Filtrer</button>
-                    <a href="{{ route('job-offer.index') }}" class="btn btn-secondary h-[52px]">Réinitialiser</a>
+                <div style="display:flex; gap:8px; align-items:end;">
+                    <button type="submit" class="btn btn-primary" style="height:52px;">Filtrer</button>
+                    <a href="{{ route('job-offer.index') }}" class="btn btn-secondary" style="height:52px;">Réinitialiser</a>
                 </div>
             </form>
         </div>
 
-        <div class="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+        <div class="grid grid-3">
             @forelse ($jobOffers as $jobOffer)
-                <article class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md">
-                    <div class="mb-4 flex items-center justify-between gap-3">
+                <article class="job-card">
+                    <div style="display:flex; justify-content:space-between; align-items:center; gap:12px;">
                         <span class="badge">{{ strtoupper($jobOffer->employment_type) }}</span>
-                        <span class="text-xs font-medium text-slate-400">{{ $jobOffer->posted_at?->format('d M Y') }}</span>
+                        <span class="muted" style="font-size:0.8rem;">{{ $jobOffer->posted_at?->format('d M Y') }}</span>
                     </div>
                     <div>
-                        <h3 class="text-xl font-bold text-slate-900">{{ $jobOffer->title }}</h3>
-                        <div class="mt-2 text-sm font-semibold text-slate-600">{{ $jobOffer->company }}</div>
-                        <div class="mt-1 text-sm text-slate-500">{{ $jobOffer->location }} · {{ $jobOffer->city ?? '' }} · {{ $jobOffer->region ?? '' }}</div>
+                        <h3>{{ $jobOffer->title }}</h3>
+                        <div class="muted" style="margin-top:8px; font-weight:700;">{{ $jobOffer->company }}</div>
+                        <div class="muted" style="margin-top:4px;">{{ $jobOffer->location }} · {{ $jobOffer->city ?? '' }} · {{ $jobOffer->region ?? '' }}</div>
                     </div>
-                    <p class="mt-4 line-clamp-3 text-sm leading-6 text-slate-600">
+                    <p class="muted" style="margin:0; line-height:1.6;">
                         {{ str($jobOffer->description)->limit(150) }}
                     </p>
-                    <div class="mt-4 flex flex-wrap gap-2">
+                    <div class="tag-row">
                         @foreach (json_decode($jobOffer->required_skills ?? '[]', true) as $skill)
                             <span class="tag">{{ $skill }}</span>
                         @endforeach
                     </div>
-                    <div class="mt-5 flex items-center justify-between gap-3">
-                        <a href="{{ route('job-offer.show', $jobOffer) }}" class="btn btn-primary">Voir détail</a>
+                    <div style="display:flex; justify-content:space-between; align-items:center; gap:8px; margin-top:auto;">
+                        <a href="{{ route('job-offer.show', $jobOffer) }}" class="btn btn-primary" style="padding:0.7rem 1rem;">Voir détail</a>
                         @auth
                             <form method="POST" action="{{ route('favorite.store', $jobOffer) }}">
                                 @csrf
-                                <button type="submit" class="btn btn-secondary">Favori</button>
+                                <button type="submit" class="btn btn-secondary" style="padding:0.7rem 1rem;">Favori</button>
                             </form>
                         @endauth
                     </div>
                 </article>
             @empty
-                <div class="card md:col-span-2 xl:col-span-3">
-                    <p class="text-slate-600">Aucune offre ne correspond à votre recherche.</p>
+                <div class="card" style="grid-column:1/-1;">
+                    <p class="muted">Aucune offre ne correspond à votre recherche.</p>
                 </div>
             @endforelse
         </div>
 
         @if ($jobOffers->hasPages())
-            <div class="card flex justify-center">
+            <div class="card" style="padding:16px; text-align:center;">
                 {{ $jobOffers->links() }}
             </div>
         @endif

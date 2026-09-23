@@ -9,7 +9,16 @@ class PremiumController extends Controller
 {
     public function index()
     {
-        return redirect()->route('dashboard')->with('success', 'Premium sera bientôt disponible.');
+        if (Auth::check() && ! Auth::user()->is_premium) {
+            return redirect()->route('dashboard')->with('error', 'Cette fonctionnalité premium nécessite un abonnement actif.');
+        }
+
+        return view('premium.index', [
+            'plans' => [
+                ['name' => 'Starter', 'price' => 5000, 'features' => ['Candidatures prioritaires', 'Alertes avancées']],
+                ['name' => 'Pro', 'price' => 15000, 'features' => ['Tout le Starter', 'Matching personnalisé', 'Statistiques avancées']],
+            ],
+        ]);
     }
 
     public function checkout(Request $request)

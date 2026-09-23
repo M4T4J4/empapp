@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\JobOffer;
-use App\Models\Language;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -23,25 +22,7 @@ class ProfileController extends Controller
     public function edit()
     {
         $user = Auth::user();
-        $this->ensureDefaultLanguages();
-        $languages = Language::orderBy('name')->get();
-
-        return view('profile.edit', compact('user', 'languages'));
-    }
-
-    protected function ensureDefaultLanguages(): void
-    {
-        $defaults = [
-            ['name' => 'Français', 'code' => 'fr'],
-            ['name' => 'Anglais', 'code' => 'en'],
-        ];
-
-        foreach ($defaults as $language) {
-            Language::firstOrCreate(
-                ['code' => $language['code']],
-                ['name' => $language['name']]
-            );
-        }
+        return view('profile.edit', compact('user'));
     }
 
     public function update(Request $request)

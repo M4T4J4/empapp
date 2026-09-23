@@ -4,156 +4,168 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>@yield('title', 'EmpApp')</title>
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
+        <style>
+            :root {
+                --bg: #f4f7fb;
+                --card: #ffffff;
+                --card-alt: #eef5ff;
+                --primary: #1d4ed8;
+                --primary-dark: #163ea8;
+                --text: #152033;
+                --muted: #5e6b85;
+                --border: #dfe7f4;
+                --success: #1f9d61;
+                --warning: #f39c12;
+                --danger: #dc2626;
+                --shadow: 0 10px 30px rgba(19, 35, 73, 0.08);
+            }
+
+            * { box-sizing: border-box; }
+            body {
+                margin: 0;
+                font-family: Arial, Helvetica, sans-serif;
+                background: var(--bg);
+                color: var(--text);
+            }
+            a { color: inherit; text-decoration: none; }
+            .container { width: min(1200px, calc(100% - 32px)); margin: 0 auto; }
+            .topbar {
+                background: #0f172a; color: #fff; position: sticky; top: 0; z-index: 50; box-shadow: 0 8px 18px rgba(15, 23, 42, 0.12);
+            }
+            .topbar-inner {
+                height: 74px; display: flex; align-items: center; justify-content: space-between; gap: 24px;
+            }
+            .brand {
+                font-size: 1.5rem; font-weight: 800; letter-spacing: -0.04em;
+            }
+            .brand span { color: #60a5fa; }
+            .nav {
+                display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
+            }
+            .nav a {
+                color: rgba(255,255,255,0.82); font-weight: 600; font-size: 0.96rem;
+            }
+            .nav a:hover { color: #fff; }
+            .btn {
+                display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+                border: 1px solid transparent; border-radius: 12px; padding: 0.8rem 1.2rem;
+                font-weight: 700; cursor: pointer; transition: all 0.2s ease;
+            }
+            .btn-primary { background: var(--primary); color: white; }
+            .btn-primary:hover { background: var(--primary-dark); }
+            .btn-secondary { background: #fff; color: var(--text); border-color: var(--border); }
+            .btn-danger { background: var(--danger); color: white; }
+            .page { padding: 32px 0 80px; }
+            .hero {
+                background: linear-gradient(135deg, #eff6ff, #f8fafc 60%, #ecfeff);
+                border: 1px solid var(--border); border-radius: 26px; padding: 48px 32px;
+                box-shadow: var(--shadow);
+            }
+            .hero h1 { font-size: clamp(2.2rem, 5vw, 4rem); margin: 0 0 16px; line-height: 1.05; letter-spacing: -0.06em; }
+            .hero p { color: var(--muted); font-size: 1.08rem; max-width: 720px; }
+            .hero-actions { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 26px; }
+            .grid { display: grid; gap: 20px; }
+            .grid-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+            .grid-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+            .card {
+                background: var(--card); border: 1px solid var(--border); border-radius: 18px; padding: 22px; box-shadow: var(--shadow);
+            }
+            .stats { display: grid; gap: 18px; grid-template-columns: repeat(4, minmax(0, 1fr)); }
+            .stat-card { background: linear-gradient(180deg, #fff, #eff6ff); border-radius: 18px; padding: 22px; border: 1px solid var(--border); }
+            .stat-number { font-size: 2rem; font-weight: 800; letter-spacing: -0.04em; margin: 8px 0; }
+            .muted { color: var(--muted); }
+            .section-title { font-size: 1.8rem; margin: 0 0 16px; letter-spacing: -0.04em; }
+            .job-card {
+                background: var(--card); border: 1px solid var(--border); border-radius: 20px; padding: 20px; display: flex; flex-direction: column; gap: 14px;
+            }
+            .job-card h3 { margin: 0; font-size: 1.3rem; }
+            .badge {
+                display: inline-flex; align-items: center; padding: 6px 10px; border-radius: 999px; font-size: 0.75rem; font-weight: 700; background: #e0ebff; color: var(--primary-dark);
+            }
+            .tag-row { display: flex; flex-wrap: wrap; gap: 8px; }
+            .tag { background: #f3f6fb; border: 1px solid var(--border); color: var(--muted); border-radius: 999px; padding: 6px 10px; font-size: 0.78rem; font-weight: 700; }
+            .form-card { max-width: 620px; margin: 24px auto; background: var(--card); border: 1px solid var(--border); border-radius: 24px; padding: 32px; box-shadow: var(--shadow); }
+            .form-grid { display: grid; gap: 16px; }
+            label { display: block; font-weight: 700; margin-bottom: 8px; }
+            input, select, textarea {
+                width: 100%; border: 1px solid var(--border); border-radius: 12px; background: #fff; padding: 0.9rem 1rem; font: inherit; color: var(--text);
+            }
+            textarea { resize: vertical; min-height: 120px; }
+            .auth-shell { min-height: calc(100vh - 74px); display: grid; place-items: center; padding: 40px 0; }
+            .alert { padding: 12px 16px; border-radius: 12px; border: 1px solid; margin-bottom: 18px; }
+            .alert-success { background: rgba(31,157,97,0.12); border-color: rgba(31,157,97,0.4); color: #0f6d43; }
+            .alert-error { background: rgba(220,38,38,0.08); border-color: rgba(220,38,38,0.22); color: #9d1b1b; }
+            .profile-box { display: grid; grid-template-columns: 220px 1fr; gap: 28px; }
+            .avatar {
+                width: 180px; height: 180px; border-radius: 50%; background: linear-gradient(135deg, #dbeafe, #e2e8f0); display: grid; place-items: center; font-size: 3rem; font-weight: 800; color: var(--primary-dark); border: 6px solid #fff; box-shadow: var(--shadow);
+            }
+            .list { display: grid; gap: 14px; }
+            .list-item { padding: 16px 18px; border: 1px solid var(--border); background: #fff; border-radius: 14px; }
+            .footer { padding: 30px 0 60px; color: var(--muted); text-align: center; }
+            @media (max-width: 900px) {
+                .stats, .grid-3, .grid-4, .profile-box { grid-template-columns: 1fr 1fr; }
+                .profile-box { grid-template-columns: 1fr; }
+            }
+            @media (max-width: 640px) {
+                .stats, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+                .topbar-inner { height: auto; padding: 18px 0; flex-direction: column; align-items: flex-start; }
+                .nav { width: 100%; }
+                .hero { padding: 28px 18px; }
+            }
+        </style>
     </head>
-    <body class="min-h-screen bg-slate-100 text-slate-800 antialiased">
-        <header class="sticky top-0 z-50 border-b border-slate-800/20 bg-slate-950/95 backdrop-blur-sm">
-            <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-                <div class="flex items-center justify-between gap-4 py-3">
-                    <a href="{{ route('home') }}" class="flex items-center gap-3 text-xl font-black tracking-tight text-white">
-                        <span class="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-sky-400 to-blue-600 text-sm font-black text-white shadow-lg shadow-blue-500/30">E</span>
-                        <span>Emp</span><span class="text-sky-400">App</span>
-                    </a>
-
-                    <button
-                        id="mobile-menu-button"
-                        type="button"
-                        class="inline-flex items-center justify-center rounded-lg border border-slate-700 bg-slate-900 p-2 text-slate-200 transition hover:bg-slate-800 md:hidden"
-                        aria-controls="main-navigation"
-                        aria-expanded="false"
-                        aria-label="Ouvrir le menu"
-                    >
-                        <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-                            <path d="M4 7h16M4 12h16M4 17h16"/>
-                        </svg>
-                    </button>
-                </div>
-
-                <nav id="main-navigation" class="hidden flex-col gap-2 border-t border-slate-800/20 pb-3 pt-2 md:flex md:flex-row md:flex-wrap md:items-center md:justify-end md:gap-2 md:border-t-0 md:pb-0 md:pt-0">
-                    @guest
-                        <div class="flex flex-col gap-1.5 md:flex-row md:items-center md:gap-2">
-                            <a href="{{ route('home') }}" class="inline-flex items-center gap-2 rounded-lg px-2.5 py-1.5 text-xs font-medium text-slate-200 transition hover:bg-slate-800 hover:text-white md:text-sm">
-                                <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V20h14V9.5"/></svg>
-                                <span>Accueil</span>
-                            </a>
-                            <a href="{{ route('login') }}" class="inline-flex items-center gap-2 rounded-lg px-2.5 py-1.5 text-xs font-medium text-slate-200 transition hover:bg-slate-800 hover:text-white md:text-sm">
-                                <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><path d="M10 17l5-5-5-5"/><path d="M15 12H3"/></svg>
-                                <span>Connexion</span>
-                            </a>
-                            <a href="{{ route('register') }}" class="inline-flex items-center gap-2 rounded-lg bg-blue-600 px-2.5 py-1.5 text-xs font-semibold text-white transition hover:bg-blue-500 md:text-sm">
-                                <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="10" cy="7" r="4"/><path d="M20 8v6M17 11h6"/></svg>
-                                <span>Inscription</span>
-                            </a>
-                        </div>
-                    @endguest
-
+    <body>
+        <header class="topbar">
+            <div class="container topbar-inner">
+                <a href="{{ route('home') }}" class="brand">Emp<span>App</span></a>
+                <nav class="nav">
+                    <a href="{{ route('home') }}">Accueil</a>
+                    <a href="{{ route('job-offer.index') }}">Offres</a>
                     @auth
                         @if (Auth::user()?->is_admin)
-                            <div class="flex flex-col gap-1.5 md:flex-row md:items-center md:gap-2">
-                                <a href="{{ route('admin.dashboard') }}" class="inline-flex items-center gap-2 rounded-lg px-2.5 py-1.5 text-xs font-medium text-slate-200 transition hover:bg-slate-800 hover:text-white md:text-sm">
-                                    <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 13h8V3H3v10Zm10 8h8V11h-8v10ZM3 21h8v-4H3v4Zm10-10h8V3h-8v8Z"/></svg>
-                                    <span>Dashboard</span>
-                                </a>
-                                <a href="{{ route('admin.users') }}" class="inline-flex items-center gap-2 rounded-lg px-2.5 py-1.5 text-xs font-medium text-slate-200 transition hover:bg-slate-800 hover:text-white md:text-sm">
-                                    <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="10" cy="7" r="4"/><path d="M20 8v6M17 11h6"/></svg>
-                                    <span>Utilisateurs</span>
-                                </a>
-                                <a href="{{ route('admin.offers') }}" class="inline-flex items-center gap-2 rounded-lg px-2.5 py-1.5 text-xs font-medium text-slate-200 transition hover:bg-slate-800 hover:text-white md:text-sm">
-                                    <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7.5A2.5 2.5 0 0 1 6.5 5h11A2.5 2.5 0 0 1 20 7.5v9A2.5 2.5 0 0 1 17.5 19h-11A2.5 2.5 0 0 1 4 16.5v-9Z"/><path d="M8 5v14"/><path d="M16 5v14"/></svg>
-                                    <span>Offres</span>
-                                </a>
-                                <a href="{{ route('admin.notifications') }}" class="inline-flex items-center gap-2 rounded-lg px-2.5 py-1.5 text-xs font-medium text-slate-200 transition hover:bg-slate-800 hover:text-white md:text-sm">
-                                    <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 17h5l-1.4-1.4A2 2 0 0 1 18 14.2V11a6 6 0 1 0-12 0v3.2a2 2 0 0 1-.6 1.4L4 17h5"/><path d="M10 20a2 2 0 0 0 4 0"/></svg>
-                                    <span>Notifications</span>
-                                </a>
-                            </div>
+                            <a href="{{ route('admin.dashboard') }}">Admin</a>
+                            <a href="{{ route('admin.users') }}">Utilisateurs</a>
+                            <a href="{{ route('admin.offers') }}">Offres</a>
+                            <a href="{{ route('admin.notifications') }}">Notifications</a>
                         @elseif (Auth::user()?->is_recruiter)
-                            <div class="flex flex-col gap-1.5 md:flex-row md:items-center md:gap-2">
-                                <a href="{{ route('recruiter.dashboard') }}" class="inline-flex items-center gap-2 rounded-lg px-2.5 py-1.5 text-xs font-medium text-slate-200 transition hover:bg-slate-800 hover:text-white md:text-sm">
-                                    <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 13h8V3H3v10Zm10 8h8V11h-8v10ZM3 21h8v-4H3v4Zm10-10h8V3h-8v8Z"/></svg>
-                                    <span>Dashboard</span>
-                                </a>
-                                <a href="{{ route('recruiter.jobs') }}" class="inline-flex items-center gap-2 rounded-lg px-2.5 py-1.5 text-xs font-medium text-slate-200 transition hover:bg-slate-800 hover:text-white md:text-sm">
-                                    <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7.5A2.5 2.5 0 0 1 6.5 5h11A2.5 2.5 0 0 1 20 7.5v9A2.5 2.5 0 0 1 17.5 19h-11A2.5 2.5 0 0 1 4 16.5v-9Z"/><path d="M8 5v14"/><path d="M16 5v14"/></svg>
-                                    <span>Offres</span>
-                                </a>
-                                <a href="{{ route('recruiter.applications') }}" class="inline-flex items-center gap-2 rounded-lg px-2.5 py-1.5 text-xs font-medium text-slate-200 transition hover:bg-slate-800 hover:text-white md:text-sm">
-                                    <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 3h8l4 4v12a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Z"/><path d="M14 3v5h5"/><path d="M8 13h8M8 17h8"/></svg>
-                                    <span>Candidatures</span>
-                                </a>
-                                <a href="{{ route('message.index') }}" class="inline-flex items-center gap-2 rounded-lg px-2.5 py-1.5 text-xs font-medium text-slate-200 transition hover:bg-slate-800 hover:text-white md:text-sm">
-                                    <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><path d="M8 9h8M8 13h6"/></svg>
-                                    <span>Messages</span>
-                                </a>
-                                <a href="{{ route('recruiter.profile') }}" class="inline-flex items-center gap-2 rounded-lg px-2.5 py-1.5 text-xs font-medium text-slate-200 transition hover:bg-slate-800 hover:text-white md:text-sm">
-                                    <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21a8 8 0 1 0-16 0"/><circle cx="12" cy="7" r="4"/></svg>
-                                    <span>Profil</span>
-                                </a>
-                            </div>
+                            <a href="{{ route('recruiter.dashboard') }}">Dashboard</a>
+                            <a href="{{ route('recruiter.jobs') }}">Offres</a>
+                            <a href="{{ route('recruiter.applications') }}">Candidatures</a>
+                            <a href="{{ route('recruiter.profile') }}">Entreprise</a>
                         @else
-                            <div class="flex flex-col gap-1.5 md:flex-row md:items-center md:gap-2">
-                                <a href="{{ route('dashboard') }}" class="inline-flex items-center gap-2 rounded-lg px-2.5 py-1.5 text-xs font-medium text-slate-200 transition hover:bg-slate-800 hover:text-white md:text-sm">
-                                    <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 13.5 12 4l8 9.5"/><path d="M6 11.5V20h12v-8.5"/></svg>
-                                    <span>Dashboard</span>
-                                </a>
-                                <a href="{{ route('job-offer.index') }}" class="inline-flex items-center gap-2 rounded-lg px-2.5 py-1.5 text-xs font-medium text-slate-200 transition hover:bg-slate-800 hover:text-white md:text-sm">
-                                    <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7.5A2.5 2.5 0 0 1 6.5 5h11A2.5 2.5 0 0 1 20 7.5v9A2.5 2.5 0 0 1 17.5 19h-11A2.5 2.5 0 0 1 4 16.5v-9Z"/><path d="M8 5v14"/><path d="M16 5v14"/></svg>
-                                    <span>Offres</span>
-                                </a>
-                                <a href="{{ route('application.index') }}" class="inline-flex items-center gap-2 rounded-lg px-2.5 py-1.5 text-xs font-medium text-slate-200 transition hover:bg-slate-800 hover:text-white md:text-sm">
-                                    <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 3h8l4 4v12a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Z"/><path d="M14 3v5h5"/><path d="M8 13h8M8 17h8"/></svg>
-                                    <span>Candidatures</span>
-                                </a>
-                                <a href="{{ route('profile.show') }}" class="inline-flex items-center gap-2 rounded-lg px-2.5 py-1.5 text-xs font-medium text-slate-200 transition hover:bg-slate-800 hover:text-white md:text-sm">
-                                    <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21a8 8 0 1 0-16 0"/><circle cx="12" cy="7" r="4"/></svg>
-                                    <span>Profil</span>
-                                </a>
-                                <a href="{{ route('message.index') }}" class="inline-flex items-center gap-2 rounded-lg px-2.5 py-1.5 text-xs font-medium text-slate-200 transition hover:bg-slate-800 hover:text-white md:text-sm">
-                                    <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><path d="M8 9h8M8 13h6"/></svg>
-                                    <span>Messages</span>
-                                </a>
-                                <a href="{{ route('favorite.index') }}" class="inline-flex items-center gap-2 rounded-lg px-2.5 py-1.5 text-xs font-medium text-slate-200 transition hover:bg-slate-800 hover:text-white md:text-sm">
-                                    <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m12 21-1.45-1.32C5.4 15.36 2 12.28 2 8.5A4.5 4.5 0 0 1 6.5 4c1.74 0 3.41.81 4.5 2.09A6.22 6.22 0 0 1 15.5 4 4.5 4.5 0 0 1 20 8.5c0 3.78-3.4 6.86-8.55 11.18L12 21Z"/></svg>
-                                    <span>Favoris</span>
-                                </a>
-                            </div>
+                            <a href="{{ route('dashboard') }}">Dashboard</a>
+                            <a href="{{ route('profile.show') }}">Profil</a>
+                            <a href="{{ route('favorite.index') }}">Favoris</a>
+                            <a href="{{ route('application.index') }}">Candidatures</a>
+                            <a href="{{ route('notification.index') }}">Notifications</a>
+                            <a href="{{ route('message.index') }}">Messages</a>
+                            <a href="{{ route('alert.index') }}">Alertes</a>
+                            <a href="{{ route('candidate.recommendations') }}">Recommandations</a>
+                            <a href="{{ route('premium.index') }}">Premium</a>
                         @endif
-
-                        <form method="POST" action="{{ route('logout') }}" class="inline-flex">
+                        <form method="POST" action="{{ route('logout') }}" style="display:inline; margin-left:4px;">
                             @csrf
-                            <button type="submit" class="inline-flex items-center gap-2 rounded-lg border border-slate-700 bg-slate-800 px-2.5 py-1.5 text-xs font-semibold text-white transition hover:bg-slate-700 md:text-sm">
-                                <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="M16 17l5-5-5-5"/><path d="M21 12H9"/></svg>
-                                <span>Déconnexion</span>
-                            </button>
+                            <button type="submit" class="btn btn-secondary" style="padding:0.6rem 1rem; border-radius: 12px;">Déconnexion</button>
                         </form>
+                    @else
+                        <a href="{{ route('login') }}">Connexion</a>
+                        <a href="{{ route('register') }}">Inscription</a>
                     @endauth
                 </nav>
             </div>
         </header>
 
-        <main class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+        <main class="container page">
+            @if (session('success'))
+                <div class="alert alert-success">{{ session('success') }}</div>
+            @endif
+            @if (session('error'))
+                <div class="alert alert-error">{{ session('error') }}</div>
+            @endif
             @yield('content')
         </main>
 
-        @if (session('success') || session('error'))
-            <div class="toast-container" aria-live="polite" aria-atomic="true">
-                @if (session('success'))
-                    <div class="toast toast-success" role="status">
-                        <div class="toast-title">Succès</div>
-                        <div class="toast-message">{{ session('success') }}</div>
-                    </div>
-                @endif
-
-                @if (session('error'))
-                    <div class="toast toast-error" role="alert">
-                        <div class="toast-title">Erreur</div>
-                        <div class="toast-message">{{ session('error') }}</div>
-                    </div>
-                @endif
-            </div>
-        @endif
-
-        <footer class="border-t border-slate-200 bg-white/80 py-8 text-center text-sm text-slate-500">
+        <footer class="container footer">
             © {{ date('Y') }} EmpApp — Plateforme de recherche d’emploi
         </footer>
     </body>
