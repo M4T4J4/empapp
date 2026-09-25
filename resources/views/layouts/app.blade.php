@@ -10,7 +10,11 @@
         <header class="topbar">
             <div class="container topbar-inner">
                 <a href="{{ route('home') }}" class="brand">Emp<span>App</span></a>
-                <nav class="nav">
+                <button id="mobile-menu-button" class="mobile-menu-button" type="button" aria-expanded="false" aria-controls="main-navigation">
+                    <span class="sr-only">Ouvrir le menu</span>
+                    <span aria-hidden="true">☰</span>
+                </button>
+                <nav id="main-navigation" class="nav">
                     <a href="{{ route('home') }}">Accueil</a>
                     <a href="{{ route('job-offer.index') }}">Offres</a>
                     @auth

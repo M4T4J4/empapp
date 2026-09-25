@@ -32,9 +32,11 @@ WORKDIR /var/www/html
 RUN apt-get update && apt-get install -y \
     unzip \
     libzip-dev \
+    libpq-dev \
     libsqlite3-dev \
     && docker-php-ext-install \
         pdo \
+        pdo_pgsql \
         pdo_sqlite \
         zip \
     && a2enmod rewrite \
@@ -76,12 +78,6 @@ RUN composer install \
 
 
 # =========================================================
-# CRÉATION DE LA BASE SQLITE
-# =========================================================
-RUN mkdir -p database \
-    && touch database/database.sqlite
-
-
 # =========================================================
 # PERMISSIONS LARAVEL
 # =========================================================
@@ -110,6 +106,6 @@ EXPOSE 80
 # =========================================================
 # DÉMARRAGE
 # =========================================================
-# Les migrations sont exécutées automatiquement
-# au démarrage du conteneur.
-CMD ["sh", "-c", "php artisan migrate --force && php artisan db:seed --force && apache2-foreground"]
+# Les migrations sont exécutées automatiquement au démarrage.
+# Les seeders restent manuels pour ne jamais réécrire les données de production.
+CMD ["sh", "-c", "php artisan migrate --force && apache2-foreground"]

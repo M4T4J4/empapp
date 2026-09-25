@@ -32,4 +32,20 @@ document.addEventListener('DOMContentLoaded', () => {
             }, 300);
         }, 5000);
     });
+
+    document.querySelectorAll('[data-password-toggle]').forEach((toggle) => {
+        const passwordInput = document.getElementById(toggle.dataset.passwordToggle);
+
+        if (!passwordInput) {
+            return;
+        }
+
+        toggle.addEventListener('click', () => {
+            const isPassword = passwordInput.type === 'password';
+
+            passwordInput.type = isPassword ? 'text' : 'password';
+            toggle.textContent = isPassword ? 'Masquer' : 'Afficher';
+            toggle.setAttribute('aria-label', `${isPassword ? 'Masquer' : 'Afficher'} le mot de passe`);
+        });
+    });
 });

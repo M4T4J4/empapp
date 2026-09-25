@@ -16,8 +16,13 @@ return new class extends Migration
             return;
         }
 
-        if (DB::getDriverName() !== 'sqlite') {
+        if (DB::getDriverName() === 'mysql') {
             DB::statement("ALTER TABLE notifications MODIFY COLUMN type ENUM('application', 'alert', 'system', 'message', 'profile_match', 'status_update', 'deadline', 'confirmation') DEFAULT 'system'");
+
+            return;
+        }
+
+        if (DB::getDriverName() === 'pgsql') {
             return;
         }
 
@@ -50,8 +55,13 @@ return new class extends Migration
             return;
         }
 
-        if (DB::getDriverName() !== 'sqlite') {
+        if (DB::getDriverName() === 'mysql') {
             DB::statement("ALTER TABLE notifications MODIFY COLUMN type ENUM('application', 'alert', 'system', 'message', 'profile_match', 'deadline', 'confirmation') DEFAULT 'system'");
+
+            return;
+        }
+
+        if (DB::getDriverName() === 'pgsql') {
             return;
         }
 
