@@ -14,7 +14,7 @@ RUN npm ci
 # Copier tout le projet
 COPY . .
 
-# Compiler Bootstrap + Vite
+# Compiler les assets Vite
 RUN npm run build
 
 
@@ -63,7 +63,7 @@ COPY . .
 
 
 # =========================================================
-# COPIE DES ASSETS VITE / TAILWIND
+# COPIE DES ASSETS VITE
 # =========================================================
 COPY --from=frontend /app/public/build ./public/build
 

@@ -1,5 +1,3 @@
-import 'bootstrap/dist/js/bootstrap.bundle.min.js';
-
 document.addEventListener('DOMContentLoaded', () => {
     const menuButton = document.getElementById('mobile-menu-button');
     const nav = document.getElementById('main-navigation');
