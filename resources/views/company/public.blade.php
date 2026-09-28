@@ -18,6 +18,8 @@
             @auth
                 @if (Auth::id() === $user->id && Auth::user()->is_recruiter)
                     <a href="{{ route('recruiter.profile') }}" class="btn btn-primary">Modifier le profil</a>
+                @elseif (! Auth::user()->is_recruiter && ! Auth::user()->is_admin && $user->is_recruiter)
+                    <a href="{{ route('message.show', $user) }}" class="btn btn-primary">Contacter l’entreprise</a>
                 @endif
             @endauth
         </div>

@@ -14,5 +14,10 @@
             <span class="tag">{{ $user->employment_preference ?? 'Disponibilité non renseignée' }}</span>
         </div>
         <p>{{ $user->bio ?? 'Aucune bio renseignée.' }}</p>
+        @auth
+            @if (Auth::user()->is_recruiter && ! Auth::user()->is_admin && ! $user->is_recruiter)
+                <a href="{{ route('message.show', $user) }}" class="btn btn-primary">Contacter le candidat</a>
+            @endif
+        @endauth
     </div>
 @endsection

@@ -32,6 +32,7 @@
                             <a href="{{ route('recruiter.jobs') }}">Offres</a>
                             <a href="{{ route('recruiter.applications') }}">Candidatures</a>
                             <a href="{{ route('company.public', Auth::user()) }}">Entreprise</a>
+                            <a href="{{ route('message.index') }}">Messages</a>
                         @else
                             <a href="{{ route('dashboard') }}">Dashboard</a>
                             <a href="{{ route('profile.show') }}">Profil</a>
