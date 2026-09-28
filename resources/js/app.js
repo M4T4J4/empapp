@@ -6,14 +6,14 @@ document.addEventListener('DOMContentLoaded', () => {
         menuButton.addEventListener('click', () => {
             const isExpanded = menuButton.getAttribute('aria-expanded') === 'true';
             menuButton.setAttribute('aria-expanded', String(!isExpanded));
-            nav.classList.toggle('hidden');
+            nav.classList.toggle('d-none');
         });
 
         nav.querySelectorAll('a, button').forEach((item) => {
             item.addEventListener('click', () => {
                 if (window.innerWidth < 768) {
                     menuButton.setAttribute('aria-expanded', 'false');
-                    nav.classList.add('hidden');
+                    nav.classList.add('d-none');
                 }
             });
         });

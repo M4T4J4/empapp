@@ -117,7 +117,7 @@
             </form>
         </div>
 
-        <div class="grid grid-3">
+        <div class="d-grid grid-3">
             @forelse ($jobOffers as $jobOffer)
                 <article class="job-card">
                     <div style="display:flex; justify-content:space-between; align-items:center; gap:12px;">

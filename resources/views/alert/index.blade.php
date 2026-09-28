@@ -10,7 +10,7 @@
             <p>Créez des filtres pour recevoir les offres qui correspondent à votre recherche, votre localisation et votre niveau de salaire.</p>
         </section>
 
-        <div class="grid" style="grid-template-columns: 1.05fr 1.35fr; gap:24px;">
+        <div class="d-grid" style="grid-template-columns: 1.05fr 1.35fr; gap:24px;">
             <section class="card">
                 <h2 class="section-title" style="font-size:1.5rem;">Créer une alerte</h2>
 
@@ -41,7 +41,7 @@
                         </select>
                     </div>
 
-                    <div class="grid" style="grid-template-columns: repeat(2, minmax(0, 1fr)); gap:16px;">
+                    <div class="d-grid" style="grid-template-columns: repeat(2, minmax(0, 1fr)); gap:16px;">
                         <div>
                             <label for="min_salary">Salaire min (FCFA)</label>
                             <input id="min_salary" name="min_salary" type="number" step="1000" min="0" value="{{ old('min_salary') }}" placeholder="300000">

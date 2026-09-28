@@ -32,7 +32,7 @@
             </div>
         </div>
 
-        <div class="grid grid-3" style="grid-template-columns: 2fr 1fr;">
+        <div class="d-grid grid-3" style="grid-template-columns: 2fr 1fr;">
             <section class="card">
                 <h2 class="section-title" style="font-size:1.4rem;">Description du poste</h2>
                 <p class="muted" style="line-height:1.8; margin:0;">{{ $jobOffer->description }}</p>

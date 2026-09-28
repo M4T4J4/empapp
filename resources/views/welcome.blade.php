@@ -1,4 +1,4 @@
-﻿@extends('layouts.app')
+@extends('layouts.app')
 
 @section('title', 'EmpApp | Accueil')
 
@@ -19,7 +19,7 @@
         </div>
     </section>
 
-    <div class="grid grid-3" style="margin-top:32px;">
+    <div class="d-grid grid-3" style="margin-top:32px;">
         <div class="card">
             <div class="badge" style="margin-bottom:12px;">Profile</div>
             <h3 style="margin-top:0;">Profil professionnel</h3>
@@ -39,7 +39,7 @@
 
     <section style="margin-top:40px;">
         <h2 class="section-title">Pourquoi les candidats utilisent EmpApp</h2>
-        <div class="grid grid-4">
+        <div class="d-grid grid-4">
             <div class="stat-card">
                 <div class="muted">Profils complets</div>
                 <div class="stat-number">100%</div>

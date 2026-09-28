@@ -14,7 +14,7 @@
                     <span class="sr-only">Ouvrir le menu</span>
                     <span aria-hidden="true">☰</span>
                 </button>
-                <nav id="main-navigation" class="nav">
+                <nav id="main-navigation" class="nav d-none d-md-flex">
                     <a href="{{ route('home') }}">Accueil</a>
                     <a href="{{ route('job-offer.index') }}">Offres</a>
                     @auth
