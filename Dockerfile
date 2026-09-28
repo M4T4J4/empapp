@@ -76,6 +76,8 @@ RUN composer install \
     --optimize-autoloader \
     --no-interaction
 
+RUN php artisan storage:link
+
 
 # =========================================================
 # =========================================================

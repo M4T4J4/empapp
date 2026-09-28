@@ -57,6 +57,9 @@
 
             <div>
                 <label for="profile_photo">Photo de profil</label>
+                @if ($user->profile_photo)
+                    <img src="{{ Storage::url($user->profile_photo) }}" alt="Photo de profil actuelle" style="display:block; width:100px; height:100px; margin-bottom:10px; border-radius:50%; object-fit:cover;">
+                @endif
                 <input id="profile_photo" type="file" name="profile_photo" accept="image/*">
             </div>
 

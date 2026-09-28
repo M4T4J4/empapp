@@ -53,6 +53,9 @@
 
             <div>
                 <label for="logo">Logo</label>
+                @if ($user->company_logo)
+                    <img src="{{ Storage::url($user->company_logo) }}" alt="Logo actuel de l’entreprise" style="display:block; max-width:180px; max-height:120px; margin-bottom:10px; object-fit:contain;">
+                @endif
                 <input id="logo" type="file" name="logo" accept="image/*">
             </div>
 

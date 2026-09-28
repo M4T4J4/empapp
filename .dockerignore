@@ -3,3 +3,4 @@
 .env
 /public/hot
 /public/build
+/public/storage

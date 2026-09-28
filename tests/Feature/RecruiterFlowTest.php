@@ -12,6 +12,12 @@ it('allows recruiter access to the recruiter dashboard and company profile', fun
 
     $this->actingAs($user);
 
-    $this->get(route('recruiter.dashboard'))->assertOk();
+    $this->get(route('recruiter.dashboard'))
+        ->assertOk()
+        ->assertSee(route('company.public', $user), false);
     $this->get(route('recruiter.profile'))->assertOk();
+    $this->get(route('company.public', $user))
+        ->assertOk()
+        ->assertSee('Modifier le profil')
+        ->assertSee(route('recruiter.profile'), false);
 });

@@ -4,6 +4,9 @@
 
 @section('content')
     <div class="card" style="display:grid; gap:18px;">
+        @if ($user->profile_photo)
+            <img src="{{ Storage::url($user->profile_photo) }}" alt="Photo de profil de {{ $user->name }}" style="width:140px; height:140px; border-radius:50%; object-fit:cover;">
+        @endif
         <h1>{{ $user->name }}</h1>
         <p class="muted">{{ $user->headline ?? 'Profil public' }}</p>
         <div class="tag-row">
