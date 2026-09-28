@@ -8,13 +8,13 @@ WORKDIR /app
 # Copier les fichiers npm
 COPY package*.json ./
 
-# Installer les dépendances
-RUN npm install
+# Installer les dépendances verrouillées
+RUN npm ci
 
 # Copier tout le projet
 COPY . .
 
-# Compiler Tailwind + Vite
+# Compiler Bootstrap + Vite
 RUN npm run build
 
 
