@@ -37,7 +37,7 @@
             </div>
         </div>
 
-        <div class="d-grid grid-2" style="grid-template-columns: 1.2fr 0.8fr;">
+        <div class="grid grid-2" style="grid-template-columns: 1.2fr 0.8fr;">
             <section class="card">
                 <h2 class="section-title">Utilisateurs récents</h2>
                 <div class="list">

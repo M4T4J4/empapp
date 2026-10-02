@@ -35,7 +35,7 @@
             </div>
         </section>
 
-        <section class="d-grid grid-3" style="grid-template-columns: 1fr 1fr;">
+        <section class="grid grid-3" style="grid-template-columns: 1fr 1fr;">
             <div class="card">
                 <h2 class="section-title" style="font-size:1.4rem;">Compétences</h2>
                 <div class="tag-row">
@@ -59,7 +59,7 @@
             </div>
         </section>
 
-        <section class="d-grid grid-3" style="grid-template-columns:1fr 1fr;">
+        <section class="grid grid-3" style="grid-template-columns:1fr 1fr;">
             <div class="card">
                 <h2 class="section-title" style="font-size:1.4rem;">Formations</h2>
                 <div class="list">

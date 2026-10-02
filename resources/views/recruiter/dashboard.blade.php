@@ -14,7 +14,7 @@
             <p>Gérez vos offres, suivez les candidatures et consultez les profils les plus pertinents.</p>
             <div class="hero-actions">
                 <a href="{{ route('recruiter.jobs') }}" class="btn btn-primary">Mes offres</a>
-                <a href="{{ route('company.public', $user) }}" class="btn btn-secondary">Profil entreprise</a>
+                <a href="{{ route('recruiter.profile') }}" class="btn btn-secondary">Profil entreprise</a>
                 <a href="{{ route('recruiter.applications') }}" class="btn btn-secondary">Candidatures</a>
             </div>
         </section>
@@ -38,7 +38,7 @@
             </div>
         </div>
 
-        <div class="d-grid grid-2" style="grid-template-columns: 1.2fr 1fr; gap:24px;">
+        <div class="grid grid-2" style="grid-template-columns: 1.2fr 1fr; gap:24px;">
             <section class="card">
                 <h2 class="section-title" style="font-size:1.5rem;">Offres récentes</h2>
                 <div class="list">

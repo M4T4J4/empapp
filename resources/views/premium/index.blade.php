@@ -10,7 +10,7 @@
             <p>Boostez votre visibilité, votre matching et vos statistiques.</p>
         </section>
 
-        <div class="d-grid grid-3">
+        <div class="grid grid-3">
             @foreach ($plans as $plan)
                 <div class="card">
                     <h2>{{ $plan['name'] }}</h2>

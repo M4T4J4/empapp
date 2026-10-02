@@ -6,16 +6,23 @@ document.addEventListener('DOMContentLoaded', () => {
         menuButton.addEventListener('click', () => {
             const isExpanded = menuButton.getAttribute('aria-expanded') === 'true';
             menuButton.setAttribute('aria-expanded', String(!isExpanded));
-            nav.classList.toggle('d-none');
+            nav.classList.toggle('is-open', !isExpanded);
         });
 
         nav.querySelectorAll('a, button').forEach((item) => {
             item.addEventListener('click', () => {
-                if (window.innerWidth < 768) {
+                if (window.innerWidth < 992) {
                     menuButton.setAttribute('aria-expanded', 'false');
-                    nav.classList.add('d-none');
+                    nav.classList.remove('is-open');
                 }
             });
+        });
+
+        window.addEventListener('resize', () => {
+            if (window.innerWidth >= 992) {
+                menuButton.setAttribute('aria-expanded', 'false');
+                nav.classList.remove('is-open');
+            }
         });
     }
 

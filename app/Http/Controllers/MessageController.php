@@ -7,6 +7,7 @@ use App\Models\Notification;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class MessageController extends Controller
 {
@@ -44,7 +45,7 @@ class MessageController extends Controller
     {
         $authUser = Auth::user();
 
-        if (! $this->canExchangeMessages($authUser, $user)) {
+        if ($authUser->id === $user->id) {
             abort(403);
         }
 
@@ -64,10 +65,6 @@ class MessageController extends Controller
     public function store(Request $request, User $user)
     {
         $authUser = Auth::user();
-
-        if (! $this->canExchangeMessages($authUser, $user)) {
-            abort(403);
-        }
 
         $validated = $request->validate([
             'message' => ['nullable', 'string', 'max:5000'],
@@ -98,19 +95,11 @@ class MessageController extends Controller
         Notification::create([
             'user_id' => $user->id,
             'title' => 'Nouveau message',
-            'message' => $authUser->name.' vous a envoyé un message.',
+            'message' => $authUser->name . ' vous a envoyé un message.',
             'type' => 'message',
             'related_id' => $message->id,
         ]);
 
         return redirect()->route('message.show', $user)->with('success', 'Message envoyé.');
-    }
-
-    private function canExchangeMessages(User $sender, User $receiver): bool
-    {
-        return $sender->id !== $receiver->id
-            && $sender->is_recruiter !== $receiver->is_recruiter
-            && ! $sender->is_admin
-            && ! $receiver->is_admin;
     }
 }

@@ -28,16 +28,11 @@
                     @else
                         <a href="{{ route('login') }}" class="btn btn-primary">Connectez-vous pour postuler</a>
                     @endauth
-                    @auth
-                        @if (! Auth::user()->is_recruiter && ! Auth::user()->is_admin && $jobOffer->user?->is_recruiter)
-                            <a href="{{ route('message.show', $jobOffer->user) }}" class="btn btn-secondary">Contacter l’entreprise</a>
-                        @endif
-                    @endauth
                 </div>
             </div>
         </div>
 
-        <div class="d-grid grid-3" style="grid-template-columns: 2fr 1fr;">
+        <div class="grid grid-3" style="grid-template-columns: 2fr 1fr;">
             <section class="card">
                 <h2 class="section-title" style="font-size:1.4rem;">Description du poste</h2>
                 <p class="muted" style="line-height:1.8; margin:0;">{{ $jobOffer->description }}</p>

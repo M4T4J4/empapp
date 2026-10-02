@@ -44,7 +44,7 @@
             </div>
         </div>
 
-        <div class="d-grid grid-2" style="grid-template-columns: 1.35fr 1fr; gap:24px;">
+        <div class="grid grid-2" style="grid-template-columns: 1.35fr 1fr; gap:24px;">
             <section class="card">
                 <h2 class="section-title" style="font-size:1.5rem;">Offres récentes</h2>
                 <div class="list">
