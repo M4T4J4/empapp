@@ -67,6 +67,7 @@ class JobOfferController extends Controller
         $validated['employment_type'] = $this->normalizeEmploymentType($validated['employment_type']);
         $validated['required_skills'] = $this->parseListValue($validated['required_skills'] ?? null);
         $validated['benefits'] = $this->parseListValue($validated['benefits'] ?? null);
+
         $validated['user_id'] = Auth::id();
         $validated['posted_at'] = now();
         $validated['company'] = $validated['company'] ?? Auth::user()->company_name ?? Auth::user()->name;

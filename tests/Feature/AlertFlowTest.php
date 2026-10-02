@@ -1,6 +1,5 @@
 <?php
 
-use App\Models\Alert;
 use App\Models\User;
 
 it('allows an authenticated user to access the alert management page', function () {
@@ -27,7 +26,11 @@ it('allows a user to create an alert and view it in the list', function () {
         'user_id' => $user->id,
         'location' => 'Paris',
         'employment_type' => 'full_time',
+        'min_salary' => 50000,
+        'max_salary' => 90000,
     ]);
 
-    $this->get(route('alert.index'))->assertSee('Paris');
+    $this->get(route('alert.index'))
+        ->assertSee('Paris')
+        ->assertSee('50 000 FCFA - 90 000 FCFA');
 });

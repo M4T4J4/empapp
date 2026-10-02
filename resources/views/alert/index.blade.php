@@ -77,7 +77,7 @@
                                     <span class="tag">{{ str_replace('_', ' ', $alert->employment_type) }}</span>
                                 @endif
                                 @if ($alert->min_salary || $alert->max_salary)
-                                    <span class="tag">{{ $alert->min_salary ? number_format($alert->min_salary, 0, ',', ' ') : '0' }}€ - {{ $alert->max_salary ? number_format($alert->max_salary, 0, ',', ' ') : '∞' }}€</span>
+                                    <span class="tag">{{ $alert->min_salary ? number_format($alert->min_salary, 0, ',', ' ') . ' FCFA' : '0 FCFA' }} - {{ $alert->max_salary ? number_format($alert->max_salary, 0, ',', ' ') . ' FCFA' : '∞' }}</span>
                                 @endif
                             </div>
 

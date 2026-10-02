@@ -70,13 +70,13 @@
             </div>
 
             <div>
-                <label for="salary_min">Salaire minimum</label>
-                <input id="salary_min" type="number" step="0.01" name="salary_min" value="{{ old('salary_min', $jobOffer->salary_min) }}">
+                <label for="salary_min">Salaire minimum (FCFA)</label>
+                <input id="salary_min" type="number" step="0.01" min="0" name="salary_min" value="{{ old('salary_min', $jobOffer->salary_min) }}">
             </div>
 
             <div>
-                <label for="salary_max">Salaire maximum</label>
-                <input id="salary_max" type="number" step="0.01" name="salary_max" value="{{ old('salary_max', $jobOffer->salary_max) }}">
+                <label for="salary_max">Salaire maximum (FCFA)</label>
+                <input id="salary_max" type="number" step="0.01" min="0" name="salary_max" value="{{ old('salary_max', $jobOffer->salary_max) }}">
             </div>
 
             <div>

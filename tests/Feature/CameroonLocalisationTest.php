@@ -1,8 +1,9 @@
 <?php
 
+use App\Models\JobOffer;
 use App\Models\User;
 
-it('accepts cameroon local job values for jobs and salaries', function () {
+it('stores Cameroon job salaries in FCFA without converting the entered values', function () {
     $user = User::factory()->create([
         'is_recruiter' => true,
         'company_name' => 'CamerData Services',
@@ -36,5 +37,62 @@ it('accepts cameroon local job values for jobs and salaries', function () {
         'region' => 'Centre',
         'employment_type' => 'contract',
         'salary_min' => 450000,
+        'salary_max' => 1400000,
+    ]);
+});
+
+it('displays stored salaries with the FCFA currency on the job offer page', function () {
+    $recruiter = User::factory()->create(['is_recruiter' => true]);
+    $jobOffer = JobOffer::create([
+        'user_id' => $recruiter->id,
+        'title' => 'Analyste de données junior',
+        'description' => 'Mission de support analytique.',
+        'company' => 'CamerData Services',
+        'location' => 'Yaoundé, Centre',
+        'employment_type' => 'contract',
+        'salary_min' => 450000,
+        'salary_max' => 1400000,
+        'is_active' => true,
+        'posted_at' => now(),
+    ]);
+
+    $this->get(route('job-offer.show', $jobOffer))
+        ->assertSee('450 000 FCFA')
+        ->assertSee('1 400 000 FCFA');
+});
+
+it('prefills and updates recruiter salaries in FCFA', function () {
+    $recruiter = User::factory()->create(['is_recruiter' => true]);
+    $jobOffer = JobOffer::create([
+        'user_id' => $recruiter->id,
+        'title' => 'Développeur Laravel',
+        'description' => 'Développement web.',
+        'company' => 'CamerData Services',
+        'location' => 'Yaoundé',
+        'employment_type' => 'full_time',
+        'salary_min' => 450000,
+        'salary_max' => 1400000,
+        'is_active' => true,
+        'posted_at' => now(),
+    ]);
+
+    $this->actingAs($recruiter)
+        ->get(route('recruiter.job.edit', $jobOffer))
+        ->assertSee('value="450000', false);
+
+    $this->put(route('recruiter.job.update', $jobOffer), [
+        'title' => 'Développeur Laravel',
+        'description' => 'Développement web.',
+        'company' => 'CamerData Services',
+        'location' => 'Yaoundé',
+        'salary_min' => 700000,
+        'salary_max' => 1000000,
+        'employment_type' => 'full_time',
+    ])->assertRedirect(route('recruiter.jobs'));
+
+    $this->assertDatabaseHas('job_offers', [
+        'id' => $jobOffer->id,
+        'salary_min' => 700000,
+        'salary_max' => 1000000,
     ]);
 });

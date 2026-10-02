@@ -66,7 +66,7 @@
                     <div class="list-item"><strong>Mode de travail :</strong><br> {{ $jobOffer->work_mode ? str_replace('_', ' ', $jobOffer->work_mode) : 'Non spécifié' }}</div>
                     <div class="list-item"><strong>Domaine :</strong><br> {{ $jobOffer->domain ?? 'Non spécifié' }}</div>
                     <div class="list-item"><strong>Région / ville :</strong><br> {{ $jobOffer->region ?? 'Non spécifiée' }} · {{ $jobOffer->city ?? 'Non spécifiée' }}</div>
-                    <div class="list-item"><strong>Salaire :</strong><br> {{ $jobOffer->salary_min ? $jobOffer->salary_min . '€' : 'Selon profil' }} - {{ $jobOffer->salary_max ? $jobOffer->salary_max . '€' : '' }}</div>
+                    <div class="list-item"><strong>Salaire :</strong><br> {{ $jobOffer->salary_min ? number_format($jobOffer->salary_min, 0, ',', ' ') . ' FCFA' : 'Selon profil' }} - {{ $jobOffer->salary_max ? number_format($jobOffer->salary_max, 0, ',', ' ') . ' FCFA' : '' }}</div>
                     <div class="list-item"><strong>Date limite :</strong><br> {{ $jobOffer->deadline ? $jobOffer->deadline->format('d/m/Y') : 'Non définie' }}</div>
                 </div>
             </aside>
